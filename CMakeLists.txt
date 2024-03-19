@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.28)
-project(ForumPetProject)
+project(algorithm-compexity-analyzer)
 
-set(PROJECT_NAME ForumPetProject)
+set(PROJECT_NAME algorithm-compexity-analyzer)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 find_program(CCACHE_FOUND ccache)
@@ -21,7 +21,10 @@ include_directories(
         ${PROJECT_SOURCE_DIR}
 )
 
+add_subdirectory(utils)
+
 set_property(GLOBAL PROPERTY RULE_LAUNCH_COMPILE "${CMAKE_COMMAND} -E time")
 set_property(GLOBAL PROPERTY RULE_LAUNCH_LINK "${CMAKE_COMMAND} -E time")
 
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
+target_link_libraries(${PROJECT_NAME} utils)
