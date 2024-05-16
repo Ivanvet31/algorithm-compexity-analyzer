@@ -3,14 +3,16 @@ cmake_minimum_required(VERSION 3.28)
 set(project "utils")
 project(${project})
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 23)
 
 set(${project}_SOURCES
         thread_pool.cpp)
 
 set(${project}_HEADERS
         singleton.h
-        thread_pool.h)
+        todo.h
+        thread_pool.h
+        types.h)
 
 set(${project}_SOURCE_LIST
         ${${project}_SOURCES}
@@ -18,4 +20,5 @@ set(${project}_SOURCE_LIST
 
 add_library(${project}
         STATIC
-        ${${project}_SOURCE_LIST})
+        ${${project}_SOURCE_LIST}
+        types.h)
