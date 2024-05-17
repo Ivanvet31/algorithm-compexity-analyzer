@@ -1,0 +1,9 @@
+---
+Language: Cpp
+BasedOnStyle: GNU
+AccessModifierOffset: -4
+AlignConsecutiveAssignments: Consecutive
+IndentPPDirectives: BeforeHash
+SpaceBeforeParens: ControlStatements
+MaxEmptyLinesToKeep: 1
+...

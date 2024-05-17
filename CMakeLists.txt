@@ -25,7 +25,7 @@ include_directories(
 FetchContent_Declare(
         tomlplusplus
         GIT_REPOSITORY https://github.com/marzer/tomlplusplus.git
-        GIT_TAG        v3.4.0
+        GIT_TAG v3.4.0
 )
 
 FetchContent_Declare(
@@ -55,6 +55,6 @@ target_link_libraries(${PROJECT_NAME} utils)
 target_link_libraries(${PROJECT_NAME} parsing)
 target_link_libraries(${PROJECT_NAME} translator)
 
-target_link_libraries(${PROJECT_NAME}  tomlplusplus::tomlplusplus)
-target_link_libraries(${PROJECT_NAME}  ncurses)
-target_link_libraries(${PROJECT_NAME}  muparser)
+target_link_libraries(${PROJECT_NAME} tomlplusplus::tomlplusplus)
+target_link_libraries(${PROJECT_NAME} ncurses)
+target_link_libraries(${PROJECT_NAME} muparser)
