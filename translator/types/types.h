@@ -10,55 +10,43 @@
 class Constant : Object
 {
   std::string content{};
+  unsigned short mem_size : 3 = 0;
 
   public:
-  Constant(const Constant &)            = delete;
-  Constant &operator=(const Constant &) = delete;
   [[nodiscard]] std::string
   get_content() const
   {
     return content;
   }
-};
-
-template <> struct std::formatter<Constant> : std::formatter<std::string>
-{
-  auto
-  format(const Constant &p, std::format_context &ctx)
+  explicit Constant(std::string cont = "", unsigned char mem = 1) : content(std::move(cont)), mem_size(mem) {}
+  friend std::ostream &operator<<(std::ostream &out, const Constant &f)
   {
-    return formatter<std::string>::format("<Constant>", ctx);
+    return out << "<Constant: " << f.content << ':' << f.mem_size + 1 << '>' << std::endl;
   }
 };
 
-class Constants : Object
+class Constants
 {
-  std::vector<const Constant *> constants;
+  std::vector<std::shared_ptr<Constant>> constants{};
 
   public:
-  Constants(const Constants &)            = delete;
-  Constants &operator=(const Constants &) = delete;
   Constants &
-  operator+=(const Constant *a)
+  operator+=(const std::shared_ptr<Constant>& a)
   {
     constants.push_back(a);
     return *this;
   }
-  [[nodiscard]] std::vector<const Constant *>
+  [[nodiscard]] std::vector<std::shared_ptr<Constant>>
   get_constants() const
   {
     return constants;
   };
-};
-
-template <> struct std::formatter<Constants> : std::formatter<std::string>
-{
-  auto
-  format(const Constants &p, std::format_context &ctx)
+  Constants() : constants() {}
+  friend std::ostream &operator<<(std::ostream &out, const Constants &f)
   {
-    std::string conc_str;
-    for (auto i = 0; i < p.get_constants().size(); ++i)
-      conc_str += std::format("<Const{}>", i);
-    return formatter<std::string>::format(conc_str, ctx);
+    for (const auto & a : f.constants)
+      out << a;
+    return out;
   }
 };
 
@@ -71,14 +59,9 @@ class AbstractList : Object
   AbstractList(const AbstractList &)            = delete;
   AbstractList &operator=(const AbstractList &) = delete;
   explicit AbstractList(const size_t a, const u8 mem) : exp_size(a), memory(mem){};
-};
-
-template <> struct std::formatter<AbstractList> : std::formatter<std::string>
-{
-  auto
-  format(const AbstractList &p, std::format_context &ctx)
+  friend std::ostream &operator<<(std::ostream &out, const AbstractList &f)
   {
-    return formatter<std::string>::format("<AbstractList>", ctx);
+    return out << "<AbstractList: " << f.exp_size << ':' << f.memory << std::endl;
   }
 };
 
@@ -91,13 +74,8 @@ class String : Object
   String &operator=(const String &) = delete;
   explicit String(std::string a) : content(std::move(a)){};
   std::string &get_content() { return content; }
-};
-
-template <> struct std::formatter<String> : std::formatter<std::string>
-{
-  auto
-  format(const String &p, std::format_context &ctx)
+  friend std::ostream &operator<<(std::ostream &out, const String &f)
   {
-    return formatter<std::string>::format("<String>", ctx);
+    return out << "<String " << f.content << '>' << std::endl;
   }
 };

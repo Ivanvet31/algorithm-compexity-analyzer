@@ -12,7 +12,8 @@ set(${project}_HEADERS
         singleton.h
         todo.h
         thread_pool.h
-        types.h)
+        types.h
+)
 
 set(${project}_SOURCE_LIST
         ${${project}_SOURCES}

@@ -2,6 +2,6 @@
 
 class Object
 {
-public:
+  public:
   virtual ~Object() = default;
 };
