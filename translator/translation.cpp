@@ -156,26 +156,67 @@ Translation(
 
   std::stack<char> skobkaStack;
   std::vector<Func> a;
+  std::vector<Branch> br;
+  br.emplace_back();
+  bool r = false;
+  bool for_t = false;
+  std::string for_tt;
   size_t type = 1;
   for (const std::string &keyword : foundKeywords)
     {
+      if (!br.back().empty() && bracesStack.size() == 1)
+        {
+          br.back().set_name(for_tt);
+          for_tt.clear();
+          a.back().addContent(std::make_shared<Branch>(br.back()));
+          br.emplace_back();
+        }
       if (keyword == ",")
         continue;
-      if (keyword == "{")
+      if (keyword == ";")
+        {
+          if (r)
+            r = false;
+          continue;
+        }
+      else if (for_t)
+        {
+          if (keyword == "(")
+            skobkaStack.push('(');
+          else if (keyword == ")")
+            {
+              skobkaStack.pop();
+              /*
+              a[a.size() - 1].addContent(
+                      std::make_shared<Branch>(Branch(for_tt)));
+                      */
+              for_t = false;
+            }
+          for_tt += ' ' + keyword;
+        }
+      else if (keyword == "for")
+        for_t = true;
+      else if (r)
+        continue;
+      else if ( keyword == "return" )
+        r = true;
+      else if (keyword == "{")
         bracesStack.push('{');
       else if (keyword == "}")
-        bracesStack.pop();
+        {
+          bracesStack.pop();
+        }
       else if (keyword == "(")
         skobkaStack.push('(');
       else if (keyword == ")")
         skobkaStack.pop();
       else if (std::find(types_keywords.begin(), types_keywords.end(), keyword)
-          != types_keywords.end())
+               != types_keywords.end())
         {
           if (keyword == "long" && type == 4 || type == 8)
             type = 8;
           else
-              type *= type_sizes[keyword];
+            type *= type_sizes[keyword];
         }
       else
         {
@@ -191,14 +232,24 @@ Translation(
                   a[a.size() - 1].expandStack(type);
                   a[a.size() - 1].addConstant(
                       std::make_shared<Constant>(Constant(keyword, type - 1)));
-                      type = 1;
-                    }
+                  type = 1;
                 }
+            }
           else
             {
-
+              if (skobkaStack.empty())
+                {
+                  if (bracesStack.size() >= 2)
+                    {
+                      std::cerr << "goida";
+                      br.back().addContent(std::make_shared<Constant>(Constant(keyword, type - 1)));
+                    }
+                  else
+                    a.back().addContent(std::make_shared<Constant>(Constant(keyword, type - 1)));
+                  type = 1;
+                }
             }
-            }
+        }
     }
 
   std::cout << std::endl;

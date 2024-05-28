@@ -26,6 +26,6 @@ int
 main()
 {
 
-  Translation a(std::vector<std::string>{"p"});
+  Translation a(std::vector<std::string>{ "p" });
   todo();
 }
