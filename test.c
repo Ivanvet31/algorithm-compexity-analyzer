@@ -3,6 +3,7 @@ long long
 mz(short p,long long a, long long f, long long b)
 {
   int ch;
+  ch = 1;
   long long amogus;
   for (int i = 0; i < 0; ++i) {
     long long ZV;

@@ -1,5 +1,4 @@
 #include "ncurses.h"
-#include "parsing/pseudocodegen.cpp"
 #include "toml++/toml.h"
 #include "translator/translation.h"
 #include "utils/thread_pool.h"
@@ -14,6 +13,7 @@
 #include <string>
 #include <vector>
 
+/*
 __uint128_t
 fact(__uint128_t a)
 {
@@ -21,6 +21,7 @@ fact(__uint128_t a)
     return 1;
   return a * fact(a - 1);
 }
+*/
 
 int
 main()

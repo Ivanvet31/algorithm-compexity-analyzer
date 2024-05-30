@@ -6,9 +6,11 @@ project(${project})
 set(CMAKE_CXX_STANDARD 23)
 
 set(${project}_SOURCES
+        dir_parser.cpp
         thread_pool.cpp)
 
 set(${project}_HEADERS
+        dir_parser.h
         singleton.h
         todo.h
         thread_pool.h

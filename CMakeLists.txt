@@ -43,7 +43,6 @@ FetchContent_MakeAvailable(ncurses)
 FetchContent_MakeAvailable(muparser)
 
 add_subdirectory(utils)
-add_subdirectory(parsing)
 add_subdirectory(translator)
 
 set_property(GLOBAL PROPERTY RULE_LAUNCH_COMPILE "${CMAKE_COMMAND} -E time")
