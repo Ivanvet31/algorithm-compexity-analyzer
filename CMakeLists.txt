@@ -51,7 +51,6 @@ set_property(GLOBAL PROPERTY RULE_LAUNCH_LINK "${CMAKE_COMMAND} -E time")
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
 
 target_link_libraries(${PROJECT_NAME} utils)
-target_link_libraries(${PROJECT_NAME} parsing)
 target_link_libraries(${PROJECT_NAME} translator)
 
 target_link_libraries(${PROJECT_NAME} tomlplusplus::tomlplusplus)

@@ -22,6 +22,7 @@ class Translation
   Translation(const Translation &)            = delete;
   Translation &operator=(const Translation &) = delete;
   explicit Translation(
+      const std::string &filename,
       const std::vector<std::string> &,
       const std::vector<std::unordered_map<std::string, std::string> > &options
       = {});

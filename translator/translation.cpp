@@ -89,6 +89,7 @@ splitIntoWords(const std::string &line)
 
 Translation::
 Translation(
+    const std::string &filename,
     const std::vector<std::string> &,
     const std::vector<std::unordered_map<std::string, std::string> > &options)
     : pool(20), undefined_funcs()
@@ -96,14 +97,16 @@ Translation(
 
   std::mutex mutex;
 
+  /*
   std::string filename
       = "/home/KiberPerdun/CLionProjects/algorithm-compexity-analyzer/test.c";
+  */
 
   std::ifstream file(filename);
   if (!file.is_open())
     {
       std::cerr << "Не могу открыть файл " << filename
-                << " для чтения, братан, жесть\n";
+                << " для чтения, братан, жи есть\n";
       return;
     }
 
