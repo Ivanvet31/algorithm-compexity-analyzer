@@ -44,6 +44,7 @@ main()
 
   algo.getComplexity();
 
+  std::cout << "=============================\ncomplexity for functions:\n";
   for (int i = 0; i < algo.getSize(); ++i)
     {
       std::cout << "func 1: \n\t" << algo.getComplexity(i) << '\n';

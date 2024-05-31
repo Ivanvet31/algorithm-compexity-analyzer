@@ -144,14 +144,15 @@ Translation(
   file.close();
 
   // выводим найденные ключевые слова
-  std::cout << "Найденные ключевые слова в файле " << filename << ":\n";
+  /*std::cout << "Найденные ключевые слова в файле " << filename << ":\n";
   for (const std::string &keyword : foundKeywords)
     {
-      if (keyword == ";")
+      /*if (keyword == ";")
         std::cout << keyword << "\n";
       else
-        std::cout << keyword << ' ';
+        std::cout << keyword << ' ';#1#
     }
+    */
 
   // выводим информацию о вложенности
   if (!bracesStack.empty())
@@ -247,7 +248,7 @@ Translation(
                 {
                   if (bracesStack.size() >= 2)
                     {
-                      std::cerr << "goida";
+                      //std::cerr << "goida";
                       br.back().addContent(std::make_shared<Constant>(Constant(keyword, type - 1)));
                     }
                   else
@@ -274,7 +275,7 @@ std::vector<std::string> Translation::getComplexity()
   std::vector<std::vector<std::string>> f_func;
 
   int it = 1;
-  std::cout << "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\nstarted getComplexity\n";
+  //std::cout << "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\nstarted getComplexity\n";
   for (Func &f : funcs)
     {
       std::stringstream buf;
@@ -289,7 +290,7 @@ std::vector<std::string> Translation::getComplexity()
         }
 
       f_func.emplace_back(func);
-      std::cout << "created f_func for func " << it << std::endl;
+      //std::cout << "created f_func for func " << it << std::endl;
 
       ++it;
     }
