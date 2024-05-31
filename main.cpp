@@ -28,40 +28,9 @@ fact(__uint128_t a)
 int
 main()
 {
-  std::string path = getPath();
-  std::cout << "you are at the " << path << std::endl;
-  std::error_code err;
+  std::string path = dir_parser::getPath();
 
-  bool isParsing = true;
-
-  while (isParsing && std::filesystem::is_directory(path, err))
-    {
-      std::vector<std::string> dirs = getDirs(path);
-      printVec(dirs);
-
-      std::string x;
-      std::cin >> x;
-
-      if (x != "q" && stoi(x) > dirs.size())
-        {
-          std::cout << "Неверный формат входных данных!\n";
-          continue;
-        }
-
-      if (x != "q")
-        {
-          path = dirs[stoi(x)];
-        }
-      else
-        {
-          isParsing = false;
-        }
-
-      std::system("clear");
-    }
-
-
-
+  path = dir_parser::browseFiles(path);
   Translation algo(path, std::vector<std::string>{ "p" });
 
   int it = 1;

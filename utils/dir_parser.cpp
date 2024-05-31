@@ -5,7 +5,7 @@
 
 #include "dir_parser.h"
 
-void printVec(const std::vector<std::string> &vec)
+void dir_parser::printVec(const std::vector<std::string> &vec)
 {
   int it = 0;
   for (const auto &x : vec)
@@ -15,12 +15,12 @@ void printVec(const std::vector<std::string> &vec)
     }
 }
 
-std::string getPath()
+std::string dir_parser::getPath()
 {
     return std::filesystem::current_path();
 }
 
-std::vector<std::string> getDirs(const std::string &path)
+std::vector<std::string> dir_parser::getDirs(const std::string &path)
 {
   std::string back = path;
 
@@ -38,4 +38,40 @@ std::vector<std::string> getDirs(const std::string &path)
     }
 
   return dirs;
+}
+
+std::string dir_parser::browseFiles(const std::string &_path)
+{
+  std::string path = _path;
+  std::cout << "you are at the " << path << std::endl;
+  std::error_code err;
+  bool isParsing = true;
+
+  while (isParsing && std::filesystem::is_directory(path, err))
+    {
+      std::vector<std::string> dirs = getDirs(path);
+      printVec(dirs);
+
+      std::string x;
+      std::cin >> x;
+
+      if (x != "q" && stoi(x) > dirs.size())
+        {
+          std::cout << "Неверный формат входных данных!\n";
+          continue;
+        }
+
+      if (x != "q")
+        {
+          path = dirs[stoi(x)];
+        }
+      else
+        {
+          isParsing = false;
+        }
+
+      std::system("clear");
+    }
+
+  return path;
 }
