@@ -1,4 +1,3 @@
-#include <unistd.h>
 #include <string>
 #include <vector>
 #include <filesystem>
@@ -18,13 +17,7 @@ void printVec(const std::vector<std::string> &vec)
 
 std::string getPath()
 {
-    char cwd[200] = {0};
-
-    getcwd(cwd,  200);
-
-    std::string path = std::string(cwd);
-
-    return path;
+    return std::filesystem::current_path();
 }
 
 std::vector<std::string> getDirs(const std::string &path)
@@ -46,4 +39,3 @@ std::vector<std::string> getDirs(const std::string &path)
 
   return dirs;
 }
-

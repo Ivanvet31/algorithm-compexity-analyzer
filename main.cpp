@@ -1,19 +1,19 @@
 #include "ncurses.h"
 #include "toml++/toml.h"
 #include "translator/translation.h"
+#include "utils/dir_parser.h"
 #include "utils/thread_pool.h"
 #include "utils/todo.h"
-#include "utils/dir_parser.h"
-#include <format>
-#include <iostream>
 
 #include <algorithm>
 #include <cctype>
+#include <cstdlib>
+#include <format>
 #include <fstream>
+#include <iostream>
 #include <stack>
 #include <string>
 #include <vector>
-#include <cstdlib>
 
 /*
 __uint128_t
@@ -30,10 +30,11 @@ main()
 {
   std::string path = getPath();
   std::cout << "you are at the " << path << std::endl;
+  std::error_code err;
 
   bool isParsing = true;
 
-  while (isParsing)
+  while (isParsing && std::filesystem::is_directory(path, err))
     {
       std::vector<std::string> dirs = getDirs(path);
       printVec(dirs);
@@ -61,6 +62,21 @@ main()
 
 
 
-  //Translation a(path, std::vector<std::string>{ "p" });
+  Translation algo(path, std::vector<std::string>{ "p" });
+
+  int it = 1;
+  for (const auto &f : algo.getFuncs())
+    {
+      std::cout << "the " << it << " func" << " \n=============================\n" << f << "\n";
+      ++it;
+    }
+
+  algo.getComplexity();
+
+  for (int i = 0; i < algo.getSize(); ++i)
+    {
+      std::cout << "func 1: \n\t" << algo.getComplexity(i) << '\n';
+    }
+
   //todo();
 }

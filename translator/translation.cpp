@@ -1,9 +1,12 @@
 #include "translation.h"
-
 #include "constructions.h"
 #include "types/types.h"
+
+#include <algorithm>
 #include <fstream>
 #include <iostream>
+#include <iterator>
+#include <sstream>
 #include <stack>
 
 std::unordered_map<std::string, size_t> type_sizes{
@@ -260,4 +263,82 @@ Translation(
     {
       std::cout << f;
     }
+
+  funcs = a;
+
+}
+
+std::vector<std::string> Translation::getComplexity()
+{
+  std::vector<std::string> complexity;
+  std::vector<std::vector<std::string>> f_func;
+
+  int it = 1;
+  std::cout << "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\nstarted getComplexity\n";
+  for (Func &f : funcs)
+    {
+      std::stringstream buf;
+      buf << f;
+
+      std::vector<std::string> func;
+      std::string _func;
+
+      while (getline(buf, _func, '\n'))
+        {
+          func.emplace_back(_func);
+        }
+
+      f_func.emplace_back(func);
+      std::cout << "created f_func for func " << it << std::endl;
+
+      ++it;
+    }
+
+  for (const auto &func : f_func)
+    {
+      for (const auto &content : func)
+        {
+          if (content.find("<Branch:") != std::string::npos)
+            {
+              std::string comp;
+
+              std::stringstream buf(content);
+
+              std::istream_iterator<std::string> begin(buf);
+              std::istream_iterator<std::string> end;
+
+              std::vector<std::string> polinoms(begin, end);
+
+              std::vector<std::string> _polinoms;
+              it = 0;
+              for (auto &p : polinoms)
+                {
+                  if (p == "<")
+                    {
+                      _polinoms.emplace_back(polinoms[it + 1]);
+                    }
+                  ++it;
+                }
+
+              if (_polinoms.empty())
+                {
+                  complexity.emplace_back("constant");
+                  break;
+                }
+              comp = _polinoms[0];
+
+              for (int i = 1; i < _polinoms.size(); ++i)
+                {
+                  comp += "*";
+                  comp += _polinoms[i];
+                }
+
+              complexity.emplace_back(comp);
+            }
+        }
+    }
+
+  complexities = complexity;
+
+  return complexity;
 }
